@@ -83,12 +83,9 @@ void branch::reset()
 {
 	m_flag = FLAG_VISIBLE;
 	
-	if (m_dtheta || m_dphi)
-	{
-		m_dtheta	= 0.;
-		m_dphi		= 0.;
-		m_dlength = 0.;
-	}
+	m_dtheta	= 0.;
+	m_dphi		= 0.;
+	m_dlength = 0.;
 	
 	for (branch* child: m_childs)
 		child->reset();
@@ -115,7 +112,7 @@ branch* branch::make_branch(unsigned int age, unsigned int degre, const double& 
 		if (rand(0., 1.) < proba)
 		{
 			branch* child;
-			if ((child = make_branch(age-1, degre)) == nullptr) continue;
+			if ((child = make_branch(age-1, degre, proba)) == nullptr) continue;
 			child->m_theta  = M_PI / (2. * age);
 			child->m_phi    = 2. * i * M_PI / degre;
 			child->m_father = result;
@@ -170,7 +167,13 @@ void branch::colid(branch* a, const bbox& wall)
 				r->m_dtheta = std::max(r->m_dtheta, + 0.2 / i);
 			else
 				r->m_dtheta = std::min(r->m_dtheta, - 0.2 / i);
-
+/*
+			if (wall.distance(r->m_pts[1]) < wall.distance(r->m_pts[1] + r->m_base.w()))
+				r->m_dphi = std::max(r->m_dphi, + 0.1 / i);
+			else
+				r->m_dphi = std::min(r->m_dphi, - 0.1 / i);
+*/
+			
 		}
 		r->compute();
 		colid(r, wall);

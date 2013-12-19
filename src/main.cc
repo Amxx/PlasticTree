@@ -145,8 +145,8 @@ int main(int argc, char* argv[])
 	for (int i=0; i<3; ++i)
 		for (int j=0; j<3; ++j)
 			{
-				tree[i*3+j] = branch::make_branch(6);
-				tree[i*3+j]->move(	1.0, //+((i==1)?0.3:0.0)+((j==1)?0.3:0.0),
+				tree[i*3+j] = branch::make_branch(6, 3, 0.8);
+				tree[i*3+j]->move(	1.0,
 														vec3(4*(i-1), -8., 4*(j-1)),
 														base3(vec3(0., 1., 0.), vec3(0., 0., 1.), vec3(1., 0., 0.))
 													);
